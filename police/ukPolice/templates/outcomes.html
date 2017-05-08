@@ -1,0 +1,14 @@
+<h1>Outcomes</h1>
+
+{% if outcomes %}
+<ul>{% for outcome in outcomes %}
+<li>Name: {{ outcome.name}} / Code: {{ outcome.code}} /
+Associated crime: {{ outcome.Associated_crime}}</li>
+{% endfor %}
+</ul>
+
+{% else %}
+<h4> There isn't any outcome</h4>
+{% endif %}
+
+<a href="{% url 'home' %}">Back</a>

@@ -1,0 +1,14 @@
+<h1>Crimes of {{ username}}</h1>
+
+{% if crimes %}
+<ul>{% for crime in crimes %}
+<li>You're assigned to: {{ crime.category}} / Date: {{ crime.date}} /
+ID: {{ crime.persisten_id}}</li>
+{% endfor %}
+</ul>
+
+{% else %}
+<h4> There isn't any crime</h4>
+{% endif %}
+
+<a href="{% url 'home' %}">Back</a>

@@ -1,0 +1,25 @@
+
+    <table>
+        <tr>
+            <td>Welcome {{ user.first_name.label_tag }} {{user.last_name.label_tag}}</td>
+            <td>{{ user.first_name}} {{ user.last_name}}</td>
+        </tr>
+
+        <tr>
+            <td>Your last login was on: {{ user.last_login.label_tag }}</td>
+            <td>{{ user.last_login }}</td>
+        </tr>
+
+    </table>
+
+    <h4>Information about UkPolice Station:</h4>
+    <p><body>All the crimes. You can see if you've been assigned to one: </body>
+    <a href="{% url 'crimes' %}">Crimes</a></p>
+
+    <p><body>All the outcomes: </body>
+    <a href="{% url 'outcomes' %}">Outcomes</a></p>
+
+    <p><body>All the Neighbourhood Priorities: </body>
+    <a href="{% url 'neighbourhoodpriorities' %}">Neighbourhood Priorities</a></p>
+
+    <a href="{% url 'logout' %}">Logout</a>

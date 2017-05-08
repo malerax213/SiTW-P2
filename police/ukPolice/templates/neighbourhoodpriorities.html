@@ -1,0 +1,14 @@
+<h1>Neighbourhood Priorities</h1>
+
+{% if np %}
+<ul>{% for n in np %}
+<li>Neighbourhood: {{ n.neighbourhood}} / The issue is: {{ n.issue}} / With date:
+{{ n.issue_date}}</li>
+{% endfor %}
+</ul>
+
+{% else %}
+<h4> There isn't any Neighbourhood Priority</h4>
+{% endif %}
+
+<a href="{% url 'home' %}">Back</a>
