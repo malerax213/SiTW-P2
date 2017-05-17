@@ -40,6 +40,11 @@ urlpatterns = [
            template_name='form.html',
            form_class=CrimeForm),
            name='crime_create'),
+    url(r'^(?P<pk>\d+)/$',
+        DetailView.as_view(
+        model=Crime,
+        template_name='crime_detail.html'),
+        name='crime_detail'),
     #url(r'^crime/(?P<pk>\d+)/edit/$',
         #LoginRequiredCheckIsOwnerUpdateView.as_view(
             #model=Crime,

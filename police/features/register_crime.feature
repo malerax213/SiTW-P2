@@ -6,12 +6,12 @@ Feature: Register crime
     Background:	There	is	a	registered	user
 			Given Exists a user "user" with password "password"
 
-		Scenario: Register just crime name
+		Scenario: Register just crime category
 			Given I login as user "user" with password "password"
-			When I register crime
-					| name |
-					| Kill |
-			Then I'm viewing the details page for crime by "user"
-					| name |
-					| Kill |
-			And There are 1 crimes
+		  When I register crime
+		    | category    |
+		    | Kill        |
+	   	Then I'm viewing the details page for crime
+		    | category    |
+      	| Kill			  |
+		  And There are 1 crimes

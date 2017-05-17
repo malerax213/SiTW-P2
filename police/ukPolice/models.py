@@ -16,6 +16,8 @@ class Crime(models.Model):
     def __unicode__(self):
         return str(self.category)+"."+str(self.date)
 
+    def get_absolute_url(self):
+        return reverse('crime_detail', kwargs={'pk': self.pk})
 
 class Outcome(models.Model):
     code = models.TextField(max_length=30)

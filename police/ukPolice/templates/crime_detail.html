@@ -1,0 +1,19 @@
+{%	block	content	%}
+<h1>
+        Crime's category: {{ crime.category }}
+
+        Crime's persisten id: {{ crime.persisten_id }}
+
+        Crime's latitude: {{ crime.latitute }}
+
+        Crime's longitude: {{ crime.longitude }}
+
+        Crime's date: {{ crime.date }}
+
+        Crime's policeman assignated: {{ crime.policeman_assignated }}
+
+</h1>
+
+<a href="{% url 'home' %}">Back</a>
+
+{%	endblock	%}
