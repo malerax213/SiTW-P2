@@ -9,7 +9,11 @@ from forms import SignUpForm
 from django.http.response import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from ukPolice.models import Outcome, NeighbourhoodPriority
+from ukPolice.models import Outcome, NeighbourhoodPriority, Crime
+from django.views.generic.edit import CreateView, UpdateView
+from forms import CrimeForm
+
+
 
 @login_required()
 def home(request):
@@ -71,5 +75,15 @@ def neighbourhoodpriorities(request):
     np = NeighbourhoodPriority.objects.all()
 
     return render_to_response('neighbourhoodpriorities.html', {
-        'np': np 
+        'np': np
     })
+
+from django.contrib.auth.decorators import login_required
+class CrimeCreate(CreateView):
+    model = Crime
+    template_name = 'form.html'
+    form_class = CrimeForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(CrimeCreate, self).form_valid(form)

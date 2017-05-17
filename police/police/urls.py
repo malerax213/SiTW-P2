@@ -14,9 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.contrib.auth.decorators import login_required
+
+from django.utils import timezone
+from django.views.generic import DetailView, ListView, UpdateView
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from ukPolice.views import main, signup, home, crimes, outcomes, neighbourhoodpriorities
+from django.views.generic.edit import CreateView
+from ukPolice.forms import CrimeForm
+from ukPolice.models import Crime
 
 urlpatterns = [
     url(r'^$', main, name='main'),
@@ -27,5 +34,16 @@ urlpatterns = [
     url(r'^crimes/', crimes, name="crimes"),
     url(r'^outcomes/', outcomes, name="outcomes"),
     url(r'^neighbourhoodpriorities/', neighbourhoodpriorities, name="neighbourhoodpriorities"),
+	url(r'^register/$',
+    	CreateView.as_view(
+	       model=Crime,
+           template_name='form.html',
+           form_class=CrimeForm),
+           name='crime_create'),
+    #url(r'^crime/(?P<pk>\d+)/edit/$',
+        #LoginRequiredCheckIsOwnerUpdateView.as_view(
+            #model=Crime,
+            #form_class=CrimeForm),
+        #name='restaurant_edit'),
     url(r'^admin/', admin.site.urls),
 ]
