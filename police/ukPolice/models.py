@@ -8,8 +8,8 @@ from datetime import date
 class Crime(models.Model):
     category = models.TextField(max_length=20)
     persisten_id = models.TextField(max_length=60, blank=True, null=True)
-    latitude = models.FloatField(blank=True, null=True)
-    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True, max_length=20)
+    longitude = models.FloatField(blank=True, null=True, max_length=20)
     date = models.DateField(default=date.today)
     policeman_assignated = models.ForeignKey(User, default='')
 

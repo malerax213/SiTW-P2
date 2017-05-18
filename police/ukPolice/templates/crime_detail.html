@@ -11,5 +11,7 @@
 
   <p>Crime's policeman assignated: {{ crime.policeman_assignated }}</p>
 
+  <a href="{% url 'crime_edit' crime.id %}">edit</a>
+
 
 <a href="{% url 'home' %}">Back</a>

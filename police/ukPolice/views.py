@@ -7,13 +7,20 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render_to_response
 from forms import SignUpForm
 from django.http.response import HttpResponseRedirect
+from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from ukPolice.models import Outcome, NeighbourhoodPriority, Crime, Neighbourhood
 from django.views.generic.edit import CreateView, UpdateView
 from forms import CrimeForm, OutcomeForm, NeighbourhoodPriorityForm
 
+class LoginRequiredMixin(object):
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
+class LoginRequiredCheckIsOwnerUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'form.html'
 
 @login_required()
 def home(request):

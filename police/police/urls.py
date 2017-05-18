@@ -24,6 +24,7 @@ from ukPolice.views import main, signup, home, crimes, outcomes, neighbourhoodpr
 from django.views.generic.edit import CreateView
 from ukPolice.forms import CrimeForm, OutcomeForm, NeighbourhoodPriorityForm
 from ukPolice.models import Crime, Outcome, NeighbourhoodPriority
+from ukPolice.views import LoginRequiredCheckIsOwnerUpdateView
 
 urlpatterns = [
     url(r'^$', main, name='main'),
@@ -34,35 +35,40 @@ urlpatterns = [
     url(r'^crimes/', crimes, name="crimes"),
     url(r'^outcomes/', outcomes, name="outcomes"),
     url(r'^neighbourhoodpriorities/', neighbourhoodpriorities, name="neighbourhoodpriorities"),
-	url(r'^registerCrime/$',
+	url(r'^registerCrime/$', # Register Crime
     	CreateView.as_view(
 	       model=Crime,
            template_name='form.html',
            form_class=CrimeForm),
            name='crime_create'),
-    url(r'^crime/(?P<pk>\d+)/$',
+    url(r'^crime/(?P<pk>\d+)/$', # View crime details
         DetailView.as_view(
         model=Crime,
         template_name='crime_detail.html'),
         name='crime_detail'),
-	url(r'^registerOutcome/$',
+    url(r'^crime/(?P<pk>\d+)/edit/$', # Edit Crime
+        LoginRequiredCheckIsOwnerUpdateView.as_view(
+            model=Crime,
+            form_class=CrimeForm),
+            name='crime_edit'),
+	url(r'^registerOutcome/$', # Register Outcome
     	CreateView.as_view(
 	       model=Outcome,
            template_name='form.html',
            form_class=OutcomeForm),
            name='outcome_create'),
-    url(r'^outcome/(?P<pk>\d+)/$',
+    url(r'^outcome/(?P<pk>\d+)/$', # View Outcome details
         DetailView.as_view(
         model=Outcome,
         template_name='outcome_detail.html'),
         name='outcome_detail'),
-    url(r'^registerNeighbourhoodPriority/$',
+    url(r'^registerNeighbourhoodPriority/$', # Register NeighbourhoodPriority
     	CreateView.as_view(
 	       model=NeighbourhoodPriority,
            template_name='form.html',
            form_class=NeighbourhoodPriorityForm),
            name='neighbourhoodPriority_create'),
-    url(r'^neighbourhoodPriority/(?P<pk>\d+)/$',
+    url(r'^neighbourhoodPriority/(?P<pk>\d+)/$', # View NeighbourhoodPriority details
         DetailView.as_view(
         model=NeighbourhoodPriority,
         template_name='neighbourhoodPriority_detail.html'),
