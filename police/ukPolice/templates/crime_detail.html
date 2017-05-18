@@ -1,19 +1,15 @@
-{%	block	content	%}
-<h1>
-        Crime's category: {{ crime.category }}
 
-        Crime's persisten id: {{ crime.persisten_id }}
+  <p>Crime's category: {{ crime.category }}</p>
 
-        Crime's latitude: {{ crime.latitute }}
+  <p>Crime's persisten id: {{ crime.persisten_id }}</p>
 
-        Crime's longitude: {{ crime.longitude }}
+  <p>Crime's latitude: {{ crime.latitute }}</p>
 
-        Crime's date: {{ crime.date }}
+  <p>Crime's longitude: {{ crime.longitude }}</p>
 
-        Crime's policeman assignated: {{ crime.policeman_assignated }}
+  <p>Crime's date: {{ crime.date }}</p>
 
-</h1>
+  <p>Crime's policeman assignated: {{ crime.policeman_assignated }}</p>
+
 
 <a href="{% url 'home' %}">Back</a>
-
-{%	endblock	%}

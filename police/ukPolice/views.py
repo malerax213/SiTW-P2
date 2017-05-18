@@ -9,9 +9,9 @@ from forms import SignUpForm
 from django.http.response import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from ukPolice.models import Outcome, NeighbourhoodPriority, Crime
+from ukPolice.models import Outcome, NeighbourhoodPriority, Crime, Neighbourhood
 from django.views.generic.edit import CreateView, UpdateView
-from forms import CrimeForm
+from forms import CrimeForm, OutcomeForm, NeighbourhoodPriorityForm
 
 
 
@@ -87,3 +87,21 @@ class CrimeCreate(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(CrimeCreate, self).form_valid(form)
+
+class OutcomeCreate(CreateView):
+    model = Outcome
+    template_name = 'form.html'
+    form_class = OutcomeForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(OutcomeCreate, self).form_valid(form)
+
+class NeighbourhoodPriorityCreate(CreateView):
+    model = NeighbourhoodPriority
+    template_name = 'form.html'
+    form_class = NeighbourhoodPriorityForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(NeighbourhoodPriorityCreate, self).form_valid(form)

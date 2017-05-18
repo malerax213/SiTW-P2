@@ -22,8 +22,8 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from ukPolice.views import main, signup, home, crimes, outcomes, neighbourhoodpriorities
 from django.views.generic.edit import CreateView
-from ukPolice.forms import CrimeForm
-from ukPolice.models import Crime
+from ukPolice.forms import CrimeForm, OutcomeForm, NeighbourhoodPriorityForm
+from ukPolice.models import Crime, Outcome, NeighbourhoodPriority
 
 urlpatterns = [
     url(r'^$', main, name='main'),
@@ -34,21 +34,38 @@ urlpatterns = [
     url(r'^crimes/', crimes, name="crimes"),
     url(r'^outcomes/', outcomes, name="outcomes"),
     url(r'^neighbourhoodpriorities/', neighbourhoodpriorities, name="neighbourhoodpriorities"),
-	url(r'^register/$',
+	url(r'^registerCrime/$',
     	CreateView.as_view(
 	       model=Crime,
            template_name='form.html',
            form_class=CrimeForm),
            name='crime_create'),
-    url(r'^(?P<pk>\d+)/$',
+    url(r'^crime/(?P<pk>\d+)/$',
         DetailView.as_view(
         model=Crime,
         template_name='crime_detail.html'),
         name='crime_detail'),
-    #url(r'^crime/(?P<pk>\d+)/edit/$',
-        #LoginRequiredCheckIsOwnerUpdateView.as_view(
-            #model=Crime,
-            #form_class=CrimeForm),
-        #name='restaurant_edit'),
+	url(r'^registerOutcome/$',
+    	CreateView.as_view(
+	       model=Outcome,
+           template_name='form.html',
+           form_class=OutcomeForm),
+           name='outcome_create'),
+    url(r'^outcome/(?P<pk>\d+)/$',
+        DetailView.as_view(
+        model=Outcome,
+        template_name='outcome_detail.html'),
+        name='outcome_detail'),
+    url(r'^registerNeighbourhoodPriority/$',
+    	CreateView.as_view(
+	       model=NeighbourhoodPriority,
+           template_name='form.html',
+           form_class=NeighbourhoodPriorityForm),
+           name='neighbourhoodPriority_create'),
+    url(r'^neighbourhoodPriority/(?P<pk>\d+)/$',
+        DetailView.as_view(
+        model=NeighbourhoodPriority,
+        template_name='neighbourhoodPriority_detail.html'),
+        name='neighbourhoodPriority_detail'),
     url(r'^admin/', admin.site.urls),
 ]

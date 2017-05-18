@@ -27,6 +27,9 @@ class Outcome(models.Model):
     def __unicode__(self):
         return self.name+"."+str(self.code)
 
+    def get_absolute_url(self):
+        return reverse('outcome_detail', kwargs={'pk': self.pk})
+
 class StreetLevelCrime(models.Model):
     crime = models.ForeignKey(Crime)
     street_id = models.TextField(max_length=50)
@@ -59,3 +62,6 @@ class NeighbourhoodPriority(models.Model):
 
     def __unicode__(self):
         return str(self.neighbourhood)+"."+str(self.issue_date)
+
+    def get_absolute_url(self):
+        return reverse('neighbourhoodPriority_detail', kwargs={'pkr': self.pk})
