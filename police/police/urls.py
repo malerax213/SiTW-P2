@@ -62,6 +62,11 @@ urlpatterns = [
         model=Outcome,
         template_name='outcome_detail.html'),
         name='outcome_detail'),
+    url(r'^outcome/(?P<pk>\d+)/edit/$', # Edit Outcome
+        LoginRequiredCheckIsOwnerUpdateView.as_view(
+            model=Outcome,
+            form_class=OutcomeForm),
+            name='outcome_edit'),
     url(r'^registerNeighbourhoodPriority/$', # Register NeighbourhoodPriority
     	CreateView.as_view(
 	       model=NeighbourhoodPriority,
@@ -73,5 +78,10 @@ urlpatterns = [
         model=NeighbourhoodPriority,
         template_name='neighbourhoodPriority_detail.html'),
         name='neighbourhoodPriority_detail'),
+    url(r'^neighbourhoodPriority/(?P<pk>\d+)/edit/$', # Edit neighbourhoodPriority
+        LoginRequiredCheckIsOwnerUpdateView.as_view(
+            model=NeighbourhoodPriority,
+            form_class=NeighbourhoodPriorityForm),
+            name='neighbourhoodPriority_edit'),
     url(r'^admin/', admin.site.urls),
 ]

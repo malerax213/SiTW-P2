@@ -64,4 +64,4 @@ class NeighbourhoodPriority(models.Model):
         return str(self.neighbourhood)+"."+str(self.issue_date)
 
     def get_absolute_url(self):
-        return reverse('neighbourhoodPriority_detail', kwargs={'pkr': self.pk})
+        return reverse('neighbourhoodPriority_detail', kwargs={'pk': self.pk})

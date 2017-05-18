@@ -26,3 +26,24 @@ def step_impl(context):
 def step_impl(context, count):
     from ukPolice.models import NeighbourhoodPriority
     assert count == NeighbourhoodPriority.objects.count()
+
+@when('I edit the neighbourhoodPriority with action "{action}"')
+def step_impl(context, category):
+    from ukPolice.models import NeighbourhoodPriority
+    np = NeighbourhoodPriority.objects.get(action=action)
+    context.browser.visit(context.get_url('neighbourhoodPriority_edit', np.pk))
+    if context.browser.url == context.get_url('neighbourhoodPriority_edit', np.pk)\
+            and context.browser.find_by_tag('form'):
+        form = context.browser.find_by_tag('form').first
+        for heading in context.table.headings:
+            context.browser.fill(heading, context.table[0][heading])
+        form.find_by_value('Submit').first.click()
+
+@then('I\'m viewing the details page for neighbourhoodPriority by "{username}"')
+def step_impl(context, username):
+    q_list = [Q((attribute, context.table.rows[0][attribute])) for attribute in context.table.headings]
+    from django.contrib.auth.models import User
+    q_list.append(Q(('user', User.objects.get(username=username))))
+    from ukPolice.models import NeighbourhoodPriority
+    np = NeighbourhoodPriority.objects.filter(reduce(operator.and_, q_list)).get()
+    assert context.browser.url == context.get_url(np)

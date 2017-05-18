@@ -8,7 +8,7 @@ Feature: Edit Crime
       | category        | persisten_id    | policeman_assignated  |
       | Robbery         | 1234            | 123456789x            |
 
-  Scenario: Edit owned crime registry country
+  Scenario: Edit owned crime registry persisten_id
     Given I login as user "user1" with password "password"
     When I edit the crime with category "Robbery"
       | persisten_id    |
