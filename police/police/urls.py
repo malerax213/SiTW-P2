@@ -20,7 +20,7 @@ from django.utils import timezone
 from django.views.generic import DetailView, ListView, UpdateView
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
-from ukPolice.views import main, signup, home, crimes, outcomes, neighbourhoodpriorities
+from ukPolice.views import main, signup, home, crimes, outcomes, neighbourhoodpriorities, CrimeDelete, OutcomeDelete, NeighbourhoodPriorityDelete
 from django.views.generic.edit import CreateView
 from ukPolice.forms import CrimeForm, OutcomeForm, NeighbourhoodPriorityForm
 from ukPolice.models import Crime, Outcome, NeighbourhoodPriority
@@ -51,6 +51,7 @@ urlpatterns = [
             model=Crime,
             form_class=CrimeForm),
             name='crime_edit'),
+    url(r'^crime/(?P<pk>\d+)/delete/$', CrimeDelete.as_view(), name="delete"), # Delete a Crime
 	url(r'^registerOutcome/$', # Register Outcome
     	CreateView.as_view(
 	       model=Outcome,
@@ -62,6 +63,7 @@ urlpatterns = [
         model=Outcome,
         template_name='outcome_detail.html'),
         name='outcome_detail'),
+    url(r'^outcome/(?P<pk>\d+)/delete/$', OutcomeDelete.as_view(), name="delete"), # Delete an Outcome
     url(r'^outcome/(?P<pk>\d+)/edit/$', # Edit Outcome
         LoginRequiredCheckIsOwnerUpdateView.as_view(
             model=Outcome,
@@ -83,5 +85,6 @@ urlpatterns = [
             model=NeighbourhoodPriority,
             form_class=NeighbourhoodPriorityForm),
             name='neighbourhoodPriority_edit'),
+    url(r'^neighbourhoodPriority/(?P<pk>\d+)/delete/$', NeighbourhoodPriorityDelete.as_view(), name="delete"), # Delete a NeighbourhoodPriority
     url(r'^admin/', admin.site.urls),
 ]

@@ -11,8 +11,9 @@ from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from ukPolice.models import Outcome, NeighbourhoodPriority, Crime, Neighbourhood
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from forms import CrimeForm, OutcomeForm, NeighbourhoodPriorityForm
+from django.urls import reverse_lazy
 
 class LoginRequiredMixin(object):
     @method_decorator(login_required())
@@ -112,3 +113,24 @@ class NeighbourhoodPriorityCreate(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(NeighbourhoodPriorityCreate, self).form_valid(form)
+
+class CrimeDelete(DeleteView):
+    model = Crime
+    template_name = 'crime_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse("crimes")
+
+class OutcomeDelete(DeleteView):
+    model = Outcome
+    template_name = 'outcome_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse("outcomes")
+
+class NeighbourhoodPriorityDelete(DeleteView):
+    model = NeighbourhoodPriority
+    template_name = 'neighbourhoodPriority_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse("neighbourhoodpriorities")
