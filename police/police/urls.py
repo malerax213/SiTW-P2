@@ -26,6 +26,9 @@ from ukPolice.forms import CrimeForm, OutcomeForm, NeighbourhoodPriorityForm
 from ukPolice.models import Crime, Outcome, NeighbourhoodPriority
 from ukPolice.views import LoginRequiredCheckIsOwnerUpdateView
 
+from ukPolice.views import APICrimeList, APICrimeDetail, APIOutcomeList, APIOutcomeDetail, APINeighbourhoodPriorityList, APINeighbourhoodPriorityDetail
+from rest_framework.urlpatterns import format_suffix_patterns
+
 urlpatterns = [
     url(r'^$', main, name='main'),
     url(r'^signup$', signup, name='signup'),
@@ -35,7 +38,7 @@ urlpatterns = [
     url(r'^crimes/', crimes, name="crimes"),
     url(r'^outcomes/', outcomes, name="outcomes"),
     url(r'^neighbourhoodpriorities/', neighbourhoodpriorities, name="neighbourhoodpriorities"),
-	url(r'^registerCrime/$', # Register Crime
+	url(r'^registerCrime/$',  # Register Crime
     	CreateView.as_view(
 	       model=Crime,
            template_name='form.html',
@@ -51,40 +54,53 @@ urlpatterns = [
             model=Crime,
             form_class=CrimeForm),
             name='crime_edit'),
-    url(r'^crime/(?P<pk>\d+)/delete/$', CrimeDelete.as_view(), name="delete"), # Delete a Crime
-	url(r'^registerOutcome/$', # Register Outcome
+    url(r'^crime/(?P<pk>\d+)/delete/$', CrimeDelete.as_view(), name="delete"),  # Delete a Crime
+	url(r'^registerOutcome/$',  # Register Outcome
     	CreateView.as_view(
 	       model=Outcome,
            template_name='form.html',
            form_class=OutcomeForm),
            name='outcome_create'),
-    url(r'^outcome/(?P<pk>\d+)/$', # View Outcome details
+    url(r'^outcome/(?P<pk>\d+)/$',  # View Outcome details
         DetailView.as_view(
         model=Outcome,
         template_name='outcome_detail.html'),
         name='outcome_detail'),
-    url(r'^outcome/(?P<pk>\d+)/delete/$', OutcomeDelete.as_view(), name="delete"), # Delete an Outcome
-    url(r'^outcome/(?P<pk>\d+)/edit/$', # Edit Outcome
+    url(r'^outcome/(?P<pk>\d+)/delete/$', OutcomeDelete.as_view(), name="delete"),  # Delete an Outcome
+    url(r'^outcome/(?P<pk>\d+)/edit/$',  # Edit Outcome
         LoginRequiredCheckIsOwnerUpdateView.as_view(
             model=Outcome,
             form_class=OutcomeForm),
             name='outcome_edit'),
-    url(r'^registerNeighbourhoodPriority/$', # Register NeighbourhoodPriority
+    url(r'^registerNeighbourhoodPriority/$',  # Register NeighbourhoodPriority
     	CreateView.as_view(
 	       model=NeighbourhoodPriority,
            template_name='form.html',
            form_class=NeighbourhoodPriorityForm),
            name='neighbourhoodPriority_create'),
-    url(r'^neighbourhoodPriority/(?P<pk>\d+)/$', # View NeighbourhoodPriority details
+    url(r'^neighbourhoodPriority/(?P<pk>\d+)/$',  # View NeighbourhoodPriority details
         DetailView.as_view(
         model=NeighbourhoodPriority,
         template_name='neighbourhoodPriority_detail.html'),
         name='neighbourhoodPriority_detail'),
-    url(r'^neighbourhoodPriority/(?P<pk>\d+)/edit/$', # Edit neighbourhoodPriority
+    url(r'^neighbourhoodPriority/(?P<pk>\d+)/edit/$',  # Edit neighbourhoodPriority
         LoginRequiredCheckIsOwnerUpdateView.as_view(
             model=NeighbourhoodPriority,
             form_class=NeighbourhoodPriorityForm),
             name='neighbourhoodPriority_edit'),
-    url(r'^neighbourhoodPriority/(?P<pk>\d+)/delete/$', NeighbourhoodPriorityDelete.as_view(), name="delete"), # Delete a NeighbourhoodPriority
+    url(r'^neighbourhoodPriority/(?P<pk>\d+)/delete/$', NeighbourhoodPriorityDelete.as_view(), name="delete"),  # Delete a NeighbourhoodPriority
     url(r'^admin/', admin.site.urls),
-]
+    ]
+
+# Restful API
+
+urlpatterns += [
+    url(r'^api/crimes/$', APICrimeList.as_view(), name='crime-list'),
+    url(r'^api/crimes/(?P<pk>\d+)/$', APICrimeDetail.as_view(), name='crime-detail'),
+    url(r'^api/outcomes/$', login_required(APIOutcomeList.as_view()), name='outcome-list'),
+    url(r'^api/outcomes/(?P<pk>\d+)/$', APIOutcomeDetail.as_view(), name='outcome-detail'),
+    url(r'^api/neighbourhoodpriorities/$', APINeighbourhoodPriorityList.as_view(), name='neighbourhoodpriority-list'),
+    url(r'^api/neighbourhoodpriorities/(?P<pk>\d+)/$', APINeighbourhoodPriorityDetail.as_view(), name='neighbourhoodpriority-detail'),
+    ]
+
+urlpatterns = format_suffix_patterns(urlpatterns,  allowed=['api', 'json', 'xml'])

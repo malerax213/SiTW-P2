@@ -15,6 +15,12 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from forms import CrimeForm, OutcomeForm, NeighbourhoodPriorityForm
 from django.urls import reverse_lazy
 
+from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from serializers import CrimeSerializer, OutcomeSerializer, NeighbourhoodPrioritySerializer
+
 class LoginRequiredMixin(object):
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
@@ -134,3 +140,33 @@ class NeighbourhoodPriorityDelete(DeleteView):
 
     def get_success_url(self):
         return reverse("neighbourhoodpriorities")
+
+class APICrimeList(generics.ListCreateAPIView):
+    model = Crime
+    queryset = Crime.objects.all()
+    serializer_class = CrimeSerializer
+
+class APICrimeDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Crime
+    queryset = Crime.objects.all()
+    serializer_class = CrimeSerializer
+
+class APIOutcomeList(generics.ListCreateAPIView):
+    model = Outcome
+    queryset = Outcome.objects.all()
+    serializer_class = OutcomeSerializer
+
+class APIOutcomeDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Outcome
+    queryset = Outcome.objects.all()
+    serializer_class = OutcomeSerializer
+
+class APINeighbourhoodPriorityList(generics.ListCreateAPIView):
+    model = NeighbourhoodPriority
+    queryset = NeighbourhoodPriority.objects.all()
+    serializer_class = NeighbourhoodPrioritySerializer
+
+class APINeighbourhoodPriorityDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = NeighbourhoodPriority
+    queryset = NeighbourhoodPriority.objects.all()
+    serializer_class = NeighbourhoodPrioritySerializer
