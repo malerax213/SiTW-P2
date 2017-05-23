@@ -11,7 +11,7 @@ class Crime(models.Model):
     latitude = models.FloatField(blank=True, null=True, max_length=20)
     longitude = models.FloatField(blank=True, null=True, max_length=20)
     date = models.DateField(default=date.today)
-    policeman_assignated = models.ForeignKey(User, default='123456789x')
+    policeman_assignated = models.ForeignKey(User, default='')
 
     def __unicode__(self):
         return str(self.category)+"."+str(self.date)
